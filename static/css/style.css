@@ -1,0 +1,246 @@
+/* google fonts */
+
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Poppins:wght@500;600;700&display=swap');
+
+/* font style */
+
+/* font-family: 'Open Sans', sans-serif;
+font-family: 'Poppins', sans-serif; */
+
+/* 
+Basic css
+ */
+
+ body{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 17px;
+    color: #646464;
+    line-height: 1.7;
+
+ }
+ h1,h2,h3,h4,h5{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #212121 !important;
+ }
+
+ .theme-button{
+   background-color: #043873;
+   color: #ffff !important;
+   border-radius: 13px 0;
+   padding: 7px 15px;
+   transition: .9s;
+   text-decoration: none;
+   font-weight: 600;
+   display: inline-block;
+   text-transform: uppercase;
+ }
+
+ .theme-button:hover{
+   background-color: #caa892;
+   
+ }
+
+
+ /* 
+ Header CSS 
+ */
+
+ .header-area{
+   padding: 15px 0;
+   
+ }
+
+
+.header-area .nav-item {
+   margin-left: 10px !important;
+   
+}
+
+
+.header-area .nav-link{
+   color: #111111;
+   font-weight: 600 !important;
+   
+}
+
+.header-area .nav-link:hover {
+   color: #caa892 !important;
+}
+
+.header-area .nav-link.active{
+   color: #646464;
+}
+
+/* navbar এর শেষের লিংকটিকে ডিজাইন করতে। */
+.header-area .nav-item:last-child .nav-link{
+   background-color: #caa892;
+   color: #ffff !important;
+   border-radius: 15px 0;
+   padding: 5px 15px;
+   margin-left: 35px;
+   transition: .9s;
+}
+
+.header-area .nav-item:last-child .nav-link:hover{
+  background-color: #043873;
+  
+}
+
+/* signup area */
+
+.signup-area .form-control{
+   background-color: #eee;
+   border: none;
+   font-size: 20px;
+   border-radius: 20px 0 0 0;
+   padding: 5px 10px;
+}
+
+.signup-area button{
+   border: none;
+   background-color: #043873;
+   padding: 5px 20px;
+   color: #fff;
+   border-radius: 0 0 20px 0;
+   transition: .5s;
+}
+
+.signup-area button:hover{
+   background-color: #b0855b;
+
+}
+
+/* end signup-area */
+
+
+
+
+/* Footer css */
+.footer-area{
+    background-color: #f8f8f8;
+ }
+ .footer-top{
+    padding-top: 70px !important;
+    padding-bottom: 30px;
+ }
+ 
+ .footer-top h3{
+    padding-bottom: 15px;
+ }
+ 
+ .footer-about img{
+   margin-bottom: 15px;
+ }
+ 
+ .footer-top-link h3{
+    font-size: 20px;
+    text-transform: capitalize;
+ }
+ 
+ .footer-top-link ul{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    
+ }
+ 
+ .footer-top-link li a{
+    text-decoration: none;
+    display: inline-block !important;
+    padding: 2px;
+    font-size: 16px;
+    color: #646464;
+    transition: .3s;
+ }
+ 
+ .footer-top-link li a:hover{
+  /* background-color: #043873 ; */
+  /* color: #ffff; */
+  color: #caa892;
+  border-radius: 5px;
+ }
+ 
+ .footer-social li{
+   display: inline-block;
+   margin-right: 5px;
+ }
+ .footer-social li a{
+    background-color: #d5d5d5;
+    width: 30px;
+    height: 30px;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    color: #ffff;
+    transition: .5s;
+   
+ }
+ 
+ .footer-social li a:hover{
+    background-color: #043873;
+   
+ }
+ 
+ .extra-social-design li a:hover{
+    background-color: #043873 !important;
+    color: #ffff;
+    border-radius: 5px;
+   
+   }
+ 
+ .footer-bottom{
+    border-top: 1px solid #c4c4c4;
+    padding: 10px 0;
+    align-items: center;
+    text-align: center;
+ }
+ 
+ .footer-bottom-tex a{
+    text-decoration: none;
+    color: #caa892;
+ }
+ 
+
+/* RESPONSIVE CSS */
+
+@media (max-width: 991px){
+
+    /* header css 991 */
+
+    .header-area .nav-item {
+        margin-left: 20px !important;
+        margin-top: 4px;
+     }
+     
+  
+     .header-area .nav-item:last-child .nav-link{
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100px;
+     }
+  
+
+
+        /* footer css 991 */
+
+.footer-about{
+    text-align: center;
+ }
+
+ .footer-top{
+    padding-top: 40px !important;
+ }
+ .footer-top-link{
+    text-align: center;
+    margin-top: 30px;
+ }
+ .footer-top-link h3{
+    padding-bottom: 0 !important;
+ }
+ .footer-social h3{
+    padding-bottom: 15px !important;
+ }
+}

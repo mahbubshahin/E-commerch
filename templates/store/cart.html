@@ -1,0 +1,125 @@
+
+{% extends 'base.html' %}
+{% block title %} Cart Page || Ecommerch {% endblock title %}
+{% block content %}
+
+<section class="order_view_section mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9">
+                <!-- order_part -->
+                <div class="order_part rounded py-2" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                    <!-- heading -->
+                    <p  class="display-6" style="text-align: center; font-style: italic; font-weight: 400;"> Your Orders</p>
+                    <!-- order_view -->
+                    <table class="table">
+                        <thead>
+                            <tr>
+                               <th scope="col">Sno</th>
+                                <th scope="col">Image</th>
+                                <th scope="col">Product</th>
+                                <th scope="col">size</th>
+                                <th scope="col">color</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- card item -->
+                            {% for cart in carts %}
+                            <tr>
+                                <th scope="row">{{forloop.counter}}</th>
+                                <td><a href="#"><img style="width:100px; height: 50px;" src="{{cart.item.image.url}}" alt=""></a></td>
+                                <td>{{cart.item.name}}</td>
+                                <td>{{cart.size}}</td>
+                                <td>{{cart.color}}</td>
+                                <td>
+                                    {% if cart.variation_single_price %}
+                                    ${{cart.variation_single_price}}
+                                    {% else %}
+                                    ${{cart.item.price}}
+                                    {% endif %}
+                                </td>
+                                <!-- quantity -->
+                                <td>
+                                    <div class="quantity">
+                                    <a href="{% url 'order:decrease' pk=cart.item.pk %}" class="btn btn-light">-</a>
+                                    <span>{{cart.quantity}}</span>                           
+                                    <a href="{% url 'order:increase' pk=cart.item.pk %}" class="btn btn-light">+</a>
+                                </td>
+                                <!-- card total -->
+                                <td>
+                                    {% if cart.variation_total %}
+                                    ${{cart.variation_total}}
+                                    {% else %}
+                                    {{cart.get_total}}tk.
+                                    {% endif %}
+                                </td>
+                                <!-- delet card item -->
+                                <td>
+                                    <a href="{% url 'order:remove-item' pk=cart.item.pk %}" class="btn">x</a>
+                                </td>
+                            
+                            {% endfor %}
+                        </tbody>                      
+                    </table>
+                </div>
+
+                <!-- coupon_code_part -->
+                <div class="couponcode">
+                  <div class="col-lg-6 rounded mt-3" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                    <form action="" method="POST" class="ms-5 p-4">
+                        Coupon 
+                        {% csrf_token %}
+                        {{ coupon_form }}
+                        <button type="submit" >></button>
+                    </form>
+                  </div>
+                </div>
+            </div>
+
+            <!-- cart total section -->
+            <div class="col-lg-3 mx-auto ps-4 pt-4" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                <h3>Cart Total</h3>
+<table class="table">
+<tbody>
+    <tr>
+        <td>subtotal:</td>
+        <td>{{order.get_totals}}</td>
+    </tr>
+    <tr>
+        <td>Total:</td>
+        <td>
+            {% if total_price_after_discount %}
+            {{total_price_after_discount}}
+            {% else %}
+            ${{order.get_totals}}
+            {% endif %}
+        </td>
+    </tr>
+</tbody>
+</table>
+<a href="{% url 'payment:checkout' %}" class="btn btn-outline-primary-2 btn-info mt-3 btn-order btn-block " style="font-style: italic; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">PROCEED TO CHECKOUT</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+  <!-- hover  -->
+  {% block hover %}
+<!-- <style>
+      .couponcode:hover {
+          transform: scale(1.05);
+          transition: transform cubic-bezier(0.39, 0.575, 0.565, 1) 1s;
+
+        } 
+</style> -->
+{% endblock hover %}
+
+{% endblock content %}
+

@@ -1,0 +1,187 @@
+
+{% extends 'base.html' %}
+{% block title %} Profile || Ecommerch {% endblock title %}
+<div class="container">
+    
+{% block content %}
+
+<main class="main">
+<!-- 
+   start page head  -->
+<div class="text-center" style="background-image: url();">
+<div class="container">
+<h1 class="page-title">MY Account</h1>
+</div>
+</div>
+<!-- start navber -->
+<nav aria-label="breadcrumb" class="breadcrumb-nav mb-3">
+<div class="container">
+    <ol class="breadcrumb">
+<li class="breadcrumb-item"><a href="#">Home</a></li>
+<li class="breadcrumb-item"><a href="#">Shop</a></li>
+<li class="breadcrumb-item"><a href="#">My Account</a></li>
+    </ol>
+</div>
+</nav>
+
+<!-- start left icon -->
+        <div class="container">
+            <div class="row">
+                <!-- start left site -->
+                <aside class="col-md-4 col-lg-3">
+                    <ul>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary  " type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExampleDashboard" aria-expanded="false" aria-controls="collapseWidthExample">
+                                Dashboard
+                            </button>                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExampleOrders" aria-expanded="false" aria-controls="collapseWidthExampleOrders">
+                                Orders
+                            </button>                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                Download
+                            </button>                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExampleAddresses" aria-expanded="false" aria-controls="collapseWidthExampleAddresses">
+                                Addresses
+                            </button>                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExampleAccount_Details" aria-expanded="false" aria-controls="collapseWidthExampleAccount_Details">
+                                Account Details
+                            </button>                        </li>
+                        <li class="nav-item">
+                            <button class="btn btn-outline-primary mt-2" type="button" data-bs-toggle="collapse" data-bs-target="#collapseWidthExample" aria-expanded="false" aria-controls="collapseWidthExample">
+                                Sign out
+                            </button>                        </li>
+                    </ul>                
+                </aside>         
+
+                <!-- start right site -->
+
+                <div class="col-lg-9 col-md-8">
+
+                    <div class="Dashboard">
+                        <div class="collapse collapse-horizontal" id="collapseWidthExampleDashboard">
+                        <div class="row">
+                         <div class="col-lg-6 ms-5  d-flex flex-column justify-content-center align-items-center overflow-hidden">
+                            <div class="profile_image">
+                               <img src="{{user.profile.image.url }}" class=" rounded" alt="" style="width:360px; height: 200px;">
+                            </div>
+                            <div class="profile-info mt-4">
+                                <h4>{{user.profile.full_name}}</h4>
+                                <span>{{user.profile.address}}, {{user.profile.city}}, {{user.profile.country}}.</span> <br>
+                                <span>Mobile: {{user.profile.phone}}</span>
+
+                            </div>
+
+                         </div>
+                        </div>
+                        </div>
+                      </div>
+
+
+                      <div class="orders">
+                        <div class="collapse collapse-horizontal" id="collapseWidthExampleOrders">
+                          <div class="card card-body"> 
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Products</th>
+                                        <th scope="col">Payment Id</th>
+                                        <th scope="col">Order Id</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in orders %}
+                                <tr>
+                                    <td scope="row">{{order.id}}</td>
+                                    <td >
+                                        {% for order_item in order.orderitems.all %}
+                                        <ul>
+                                            <li>{{order_item}}</li>
+                                        </ul>
+                                        {% endfor %}
+                                    </td>
+                                    <td>{{order.paymentId}}</td>
+                                    <td>{{order.orderId}}</td>
+                                </tr>
+                                    {% endfor %}
+                                </tbody>
+                                </table>
+                          </div>
+                        </div>
+                      </div>
+                     
+                    <div class="Addresses">
+                        <div class="collapse collapse-horizontal" id="collapseWidthExampleAddresses">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="card card-body" >
+                                    <h3>Billing Address</h3>
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        {{billingaddress}}
+                                        <br>
+                                        <input class="btn btn-primary mt-2" type="submit" value="save address">
+                                    </form>
+                                  </div>
+                            </div>
+                            <div class="col-lg-6">
+                                ff
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                     
+                     
+                      <div class="AccountDetails">
+                        <div class="collapse collapse-horizontal" id="collapseWidthExampleAccount_Details">
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="card card-body" >
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        {{ProfileForm}}
+                                        <br>
+                                        <input class="btn btn-primary mt-2" type="submit" value="save address">
+                                    </form>
+                                  </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="card card-body" >
+                               gg
+                                  </div>
+                            </div>
+                        </div>
+                        </div>
+                      </div>
+                  
+
+                  
+
+          
+
+                </div>
+    </div>
+        </div>
+
+
+</main> 
+
+
+{% endblock content %}
+
+
+
+
+
+
+
+
+
+
+
+
+

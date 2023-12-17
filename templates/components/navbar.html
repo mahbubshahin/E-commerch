@@ -1,0 +1,66 @@
+{% block logoinfo_from_navbar %}
+ {% load logoinfo %}
+
+ <!-- Start Header -->
+<header class="header-area mb-3 " style="box-shadow: 0px 8px 20px rgba(0.3, 0.30, 0.30, 0.3); ">
+  <div class="container ">
+      <nav class="navbar navbar-expand-lg ">
+          <a class="navbar-brand" href="#">
+            <!-- <img style="height: 40px;" src="" alt="image"> -->
+            <h5>Web Development</h5>
+            </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- for menu ber image -->
+            <span>
+              <i class="fa-solid fa-bars"></i>
+            </span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <div class="header-ul ms-auto">
+                <ul class="navbar-nav  " style="text-transform: uppercase;">
+                  {% if user.is_authenticated %}
+                  
+                    <li class="nav-item">
+                      <a class="nav-link" aria-current="page" href="{% url 'store:index' %}">Home</a>
+                  </li>
+                    {% endif %}
+                    <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">PROJECT</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                      <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        SERVICES
+                      </a>
+                      <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#"> dropdown one</a></li>
+                          <li><a class="dropdown-item" href="#">dropdown two</a></li>
+                        </ul>
+                    </li>
+  
+                  {% if user.is_authenticated %}
+                  <li class="nav-item ">
+                    <a class="nav-link" href="{% url 'profile' %}" >profile</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="{% url 'logout' %}">Logout</a>
+                  </li>
+                  {% else %}
+                  <li class="nav-item" style="text-transform: uppercase;">
+                    <a class="nav-link" aria-current="page" href="{% url 'register' %}">Register</a>
+                </li>
+                  <li class="nav-item">
+                    <a class="nav-link " aria-current="page" href="{% url 'login' %}">Sign Up</a>
+                  </li> 
+                  {% endif %}  
+                </ul>
+            </div>
+          </div>
+        
+      </nav>
+  </div>
+</header>
+        
+<!-- End Header -->
+
+
+{% endblock logoinfo_from_navbar %} 

@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% block title %} E-Store || Ecommerch {% endblock title %}
+<div class="container"> 
+{% block content %}
+
+
+
+   <!-- start category and banner section  -->
+   <section class="catagory_and banner">
+    <div class="container">
+      <div class="row">
+
+        <!-- start category part -->
+   <div class="col-lg-3">
+     <nav class="navbar navbar-dark">
+         <div class="container">
+             <button class="navbar-toggler text-dark px-4 py" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+                 <h4> Category
+                     <span class="navbar-toggler-icon"></span>
+                 </h4>
+             </button>
+         </div>
+     </nav>
+   
+     <div class="collapse shadow" id="navbarToggleExternalContent">
+         <div class="bg- p-4">
+             <ul class="navbar-nav ms-auto mb-2 mb-lg-0 nav-link">
+                <!-- Add the link for displaying all products -->
+                <li class="item-lead nav-link">
+                  <a href="/" class="text-decoration-none fw-bold">All Products</a>
+                </li>
+                 {% for cat in categories %}
+                 {% if cat.children.all %}
+                 <li class="item-lead nav-link">
+                     <a href="?category_id={{ cat.id }}" class="text-decoration-none fw-bold">{{ cat.name }}</a>
+                     <ul class="text-decoration-none">
+                         {% for subcategory in cat.children.all %}
+                         <li style="list-style: none;">
+                             <a class="text-decoration-none fw-bold text-dark ms-4" href="?category_id={{ subcategory.id }}">{{ subcategory.name }}</a>
+                         </li>
+                         {% endfor %}
+                     </ul>
+                 </li>
+                 {% endif %}
+                 {% endfor %}
+             </ul>
+         </div>
+     </div>
+   </div>
+   
+
+        <!-- start banner part -->
+        <div class="col-lg-6 rounded d-flex flex-column justify-content-center align-items-center overflow-hidden " style=" height: 250px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+          <div id="banner-carousel" class="carousel slide " data-bs-ride="carousel">
+            <ol class="carousel-indicators">
+              {% for banner in banners %}
+              <li data-bs-target="#banner-carousel" data-bs-slide-to="{{ forloop.counter0 }}" {% if forloop.first %}class="active"{% endif %}></li>
+              {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+              {% for banner in banners %}
+              <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img  class="d-block img-fluid ms-2 py-3"  src="{{banner.image.url}}" alt="{{banner.product.name}}" style="width: 520px; height: 250px;">
+                <div class="carousel-caption d-none d-md-block">
+                  <h5 class="intro-subtitle text-primary">New Arrival</h5>
+                  <h1 class="intro-title">{{banner.product.name}}</h1>
+                  <h3><sup>Today</sup><span class="text-primary"> ${{banner.product.price}}</span></h3>
+                  <a href="" class="btn btn-primary btn-round">
+                    <span>Shop more</span>
+                  </a>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#banner-carousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#banner-carousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+   </section>
+
+
+<!-- start products section -->
+<section class="product_section section mt-5" >
+  <div class="container">
+    <div class="row">
+      {% for product in products %}
+      <div class="product col-md-2 mb-3   justify-content-center " >
+        <div class="py-2 text-center" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+          <img style="width: 130px; height: 70px;" src="{{product.image.url}}" alt="Not Found" /><br>
+          <span><a class="fw-bold" href="{{product.get_product_url}}" style="text-decoration: none;">{{product.name}}</a></span><br>
+          <span>price: {{product.price}} tk.</span><br>
+          <span>{% if product.old_price %}Old price: <del>{{product.old_price}}</del> tk.{% endif %}</span>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- hover  -->
+  {% block hover %}
+  <style>
+    .product:hover {
+      transform: scale(1.05);
+      transition: transform cubic-bezier(0.39, 0.575, 0.565, 1) 1s;
+    }
+  </style>
+  {% endblock hover %}
+</section>
+
+
+{% endblock %}
+
+</div>
+
+
+
+

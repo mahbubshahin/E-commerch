@@ -1,0 +1,198 @@
+
+{% load cart_product %}
+{% load logoinfo %}
+{% load static %}
+ 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{% block title %} {% endblock title %} </title>  
+
+      <!-- fontawesome account link -->
+      <script
+      src="https://kit.fontawesome.com/a5158a1674.js"
+      crossorigin="anonymous"
+    ></script>
+    <!-- fontawesome offline css  -->
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/fontawesome.min.css' %}" />
+    <!-- faveicon link -->
+    <link
+      rel="shortcut icon"
+      href="{% static 'img/favicon.png"
+      type="image/x-icon' %}"
+    />
+    <!-- bootstrap offline css -->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" />
+    <!-- owl offline css -->
+    <link rel="stylesheet" href="{% static 'css/owl.carousel.min.css' %}" />
+    <!-- main css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    {% block hover %} {% endblock hover %}
+    {% block footer_css %} {% endblock footer_css %}
+  </head>
+  <body>
+    <!-- Navbar -->
+    {% include 'components/navbar.html'  %}
+    <!-- Navbar End -->
+<!-- start logo and search section -->
+
+<section class="search mb-4 ">
+
+  {% if user.is_authenticated %}
+  <div class="container">
+    <div class="row">
+        <!-- logo -->
+        <div class="col-lg-3 mt-3">
+          <a class="navbar-brand text-dark" href="#"> <img style="width: 200px; height: 40px; margin-left: 10px;" src="{{request|logo}}" alt=""> </a>
+        </div>
+        <!-- start search ber -->
+     <div class="col-lg-6 mt-3">
+        <div class="header-center" >
+          <div class="header-search header-search-extended header-search-visible d-none d-lg-block">
+        <a href="" class="search-toggle" role="button"><i class="icon-search"></i></a>
+        <form action="" method="post">
+          {% csrf_token %}
+        <div class="header-search-wrapper search-wrajpper-wide">
+        <div class="row">
+          <div class="col-lg-9">
+            <input type="search" name="search_product" class="form-control" id="q" placeholder="search product">
+          </div>
+          <div class="col-lg-2 " >
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </div>
+        </div>
+        </div>
+        </form>
+          </div>
+        </div>
+     </div>
+
+<!-- start cart and count part -->
+<div class="col-lg-3 mt-3">
+  <!-- count -->
+  <div class="count">
+    <a href="" data-bs-toggle="modal" data-bs-target="#count" class="btn btn-outline-success border col-md-4 float-lg-end ">Count</a>
+    <!-- Modal count -->
+    <div class="modal fade" id="count" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="checkoutModalLabel">
+  Count</h5>
+            <hr>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="m-2 p-3">
+              <form action="/check-out" method="POST">
+                  {% csrf_token %}
+                  <div class="icon">
+                    
+                    {% if request.user.is_authenticated %}
+  
+                  <span>{{request.user|cart_count}}</span> 
+                  {% else %}
+                  <span>0</span>
+  
+                    {% endif%}
+                  
+                  </div>
+              </form>
+            </div>
+          </div>
+         
+        </div>
+      </div>
+    </div >
+  </div>
+
+  <!-- cart -->
+<div class="cart">
+  <a href="#" data-bs-toggle="modal" data-bs-target="#cart" class="btn btn-outline-success border col-md-4 float-lg-end mx-3">cart</a>
+    
+  <!-- Modal cart -->
+  <div class="modal fade" id="cart" tabindex="-1" role="dialog" aria-labelledby="ColorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="ColorModalLabel">
+  Total product, quantity & price</h5>
+          <hr>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="m-2 p-3">
+            <form action="/check-out" method="POST">
+                {% csrf_token %}
+                <div class="show_cart_items">  
+                  {% if request.user.is_authenticated %}
+                  {% if request.user|cart_view %}
+                  {% for cart in request.user|cart_view %}
+                <h5><a href="product.html">{{cart.item.name}}</a>
+                
+                </h5> 
+                
+                <span>{{cart.item.price}}</span> X <span>{{cart.quantity}}</span> = <span>{{cart.get_total}}</span> <span><a href="poduct.html">
+                  <img style="width: 90px; height: 40px;" src="{{cart.item.image.url}}" alt="">
+                </a></span>
+                
+                  {% endfor %}
+                  {% endif %}
+                  {% endif%}
+                
+                </div>
+      
+                <div class="total">
+                  <span>Total</span>
+                   {% if request.user.is_authenticated %}
+                <span class="cart-total-price">Tk {{request.user|cart_total}}</span>
+                   {% else %}
+                  <span class="cart-total-price">0</span>
+                   {% endif %}
+                 </div>
+    
+                 <div class="cart_html">
+                  <span><a class="btn mt-3 btn-primary" href="{% url 'order:cart' %}">view cart</a></span>  <span><a href=""></a></span>
+                 </div>
+            </form>
+          </div>
+        </div>
+       
+      </div>
+    </div>
+  </div >
+
+
+</div>
+
+</div>
+
+</div>
+    </div> 
+    {% endif %}
+    </section>
+
+    <div class="container mx-5">{% block content %}{% endblock %}</div>
+
+    <!-- Footer -->
+    {% include 'components/footer.html' %}
+    <!-- Footer End -->
+  
+
+ <!-- bootstrap javaScript css -->
+ <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+  </body>
+</html>
+
+
+
+
+

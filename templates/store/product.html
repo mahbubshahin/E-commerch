@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+
+
+<div class="container">
+    
+{% block content %}
+
+
+<div class="col-lg-12 ms-5 mt-4">
+  <div class="row 
+  " >
+
+  <div class="col-md-2 " style="width: 150px;" >
+    <div class="row">
+      {% for product_image in product_images %}
+
+  <div class=" sub-image rounded  h-50 mt-2" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);">
+      
+<a  href="{{product_image.image.url}}" data-image="{{product_image.image.url}}" data-zoom-image="{{product_image.image.url}}"><img 
+  class="-image-top active w-100 h-50 my-2"
+  src="{{product_image.image.url}}"
+  alt="Not Found"
+/></a>
+    </div>
+    {% endfor %} 
+    </div>
+  </div>
+
+  
+    <div class=" col-lg-7 ms-auto" style="width: 500px; height: 330px; box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+      <a  class=" " href="{{item.image.url}}">
+        <img  class="p-3 pt-4 w-100 "
+      src="{{item.image.url}}"
+      alt="Not Found"
+    />
+      </a>
+    </div>
+
+
+   <div class=" mx-auto rounded p-4 col-lg-3 " style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+    
+    <div class="product_details mx-2">
+      <h3 class="card-title">{{item.name}}</h3>
+    <h3 class="card-title">{{item.price}}.tk</h3>
+    <div class="card-title"> {% if item.old_price %} Old price: <del> {{item.old_price}} </del> tk. {% endif %} </div>
+    <span>category:<a style="text-decoration: none;" href="#">{{item.category}}</a> </span>
+    </div>
+
+
+<!-- this is the part of product variation  -->
+
+<form class="mt-2" action="{% url 'order:add_to_cart' pk=item.pk %}" method="post"> 
+
+  {% csrf_token %}
+
+  
+ <div class="product_variation_size_color_quantity">
+
+  <div class="row product variation_size mt-2">
+
+    <div class="col-md-12">
+           {% if item.variationvalue_set.sizes %}
+   
+          <div class="row " >
+          <div class="col-lg-4" >
+            
+           <label for="size">Size</label>
+          </div>
+     
+          <div class="col-lg-2" >
+            
+           <select name="size" id="size">
+             <option value="#" selected="selected">Select a size</option>
+             {% for item_variation in item.variationvalue_set.sizes %}
+             <option name="size" value="{{item_variation.name}}">{{item_variation.name}}</option>
+             {% endfor %}
+           </select>
+         </div>
+   
+          </div>
+   
+          {% endif %}
+        </div>
+      </div>
+   
+      <div class="row product variation_color mt-2">
+   
+       <div class="col-md-12">
+         {% if item.variationvalue_set.colors %}
+   
+        <div class="row " >
+        <div class="col-lg-4" >
+          
+         <label for="color">Colors</label>
+        </div>
+   
+        <div class="col-lg-2" >
+          
+         <select name="color" id="color">
+           <option value="#" selected="selected">Select a color</option>
+           {% for item_variation in item.variationvalue_set.colors %}
+           <option name="color" value="{{item_variation.name}}">{{item_variation.name}}</option>
+           {% endfor %}
+         </select>
+       </div>
+   
+        </div>
+   
+        {% endif %}
+      </div>
+    </div>
+   
+    <div class="row product variation_qty mt-2">
+   
+      <div class="col-md-12">
+  
+       <div class="row " >
+       <div class="col-lg-4" >
+         
+        <label for="qty">Qty</label>
+       </div>
+  
+       <div class="col-lg-2" >
+
+<div >
+  <input style="width: 100px;" type="number" id="qty" name="quantity" value="1" >
+
+</div>
+      </div>
+  
+       </div>
+  
+     </div>
+   </div>
+
+   <div class="add-to-cart mt-5">
+ <button type="submit" class="btn btn-primary ">add to cart</button>
+  </div>  
+ </div>
+    </form>
+    
+
+   </div> 
+  
+
+  </div>
+
+
+
+<!-- product description -->
+  <div class="row m-4 " >
+    <div class="col-9 ms-4 py-3" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19); ">
+     <h3 class="mt-4 ms-4"> <h3>product description:</h3> {{item.description}}</h3>
+    </div>
+  </div>
+</div>
+
+
+<!-- hover section -->
+
+{% block hover %}
+<style>
+      .sub-image:hover {
+          transform: scale(1.05);
+          transition: transform cubic-bezier(0.39, 0.575, 0.565, 1) 1s;
+
+        } 
+</style>
+{% endblock hover %}
+
+{% endblock %}
+
+</div>
+
+
